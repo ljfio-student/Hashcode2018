@@ -35,13 +35,18 @@ public class Main {
             Ride ride = rides.get(r);
 
             // Order by the closest vehicle to ride
-            Collections.sort(vehicles, (a, b) -> ride.distance(a) - ride.distance(b));
+            // Filter out any vehcile that is not within range
+            Vehicle vehicle = vehicles.stream()
+                .filter(v -> v.currentTime > ride.latestFinish)
+                .sorted((a, b) -> ride.distance(a) - ride.distance(b))
+                .findFirst()
+                .orElse(null);
 
-            Vehicle vehicle = vehicles.get(0);
+            if (vehicle != null) {
+                int startTime = Integer.max(ride.earliestStart, vehicle.currentTime + ride.distance(vehicle));
 
-            int startTime = Integer.max(ride.earliestStart, vehicle.currentTime + ride.distance(vehicle));
-
-            vehicle.addRide(ride, startTime);
+                vehicle.addRide(ride, startTime);
+            }
         }
 
         // Iterate over list of vehicles
