@@ -18,6 +18,11 @@ public class Main {
     public Main(String inputFileName, String outputFileName) {
         rides = new ArrayList<>();
         vehicles = new ArrayList<>();
+
+        loadFile(inputFileName);
+
+        System.out.printf("Rides: %d\n", rides.size());
+        System.out.printf("Vehicles: %d\n", vehicles.size());
     }
 
     public void loadFile(String fileName) {
