@@ -1,8 +1,12 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public List<Ride> rides;
@@ -23,6 +27,37 @@ public class Main {
 
         System.out.printf("Rides: %d\n", rides.size());
         System.out.printf("Vehicles: %d\n", vehicles.size());
+
+        // Order the rides by the earliest start
+        Collections.sort(rides, (a, b) -> a.earliestStart - b.earliestStart);
+
+        for (int r = 0; r < rides.size(); r++) {
+            Ride ride = rides.get(r);
+
+            // Order by the closest vehicle to ride
+            Collections.sort(vehicles, (a, b) -> ride.distance(a) - ride.distance(b));
+
+            Vehicle vehicle = vehicles.get(0);
+
+            int startTime = Integer.max(ride.earliestStart, vehicle.currentTime + ride.distance(vehicle));
+
+            vehicle.addRide(ride, startTime);
+        }
+
+        // Iterate over list of vehicles
+        String output = vehicles.stream()
+            .map(v -> v.output())
+            .collect(Collectors.joining("\n"));
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));
+
+            writer.write(output);
+
+            writer.close();
+        } catch (IOException ex) {
+
+        }
     }
 
     public void loadFile(String fileName) {
