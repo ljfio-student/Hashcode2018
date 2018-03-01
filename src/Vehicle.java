@@ -7,6 +7,8 @@ public class Vehicle {
     public int currentX;
     public int currentY;
 
+    public int currentTime;
+
     public List<Ride> rides;
 
     public Vehicle(int id) {
@@ -14,7 +16,12 @@ public class Vehicle {
         this.rides = new ArrayList<Ride>();
     }
 
-    public void addRide(Ride ride) {
+    public void addRide(Ride ride, int startTime) {
         this.rides.add(ride);
+
+        this.currentX = ride.end.getLeft();
+        this.currentY = ride.end.getRight();
+
+        this.currentTime = startTime + ride.distance();
     }
 }
