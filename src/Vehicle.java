@@ -17,12 +17,15 @@ public class Vehicle {
         this.rides = new ArrayList<Ride>();
     }
 
+    // add a ride to the list of rides
     public void addRide(Ride ride, int startTime) {
         this.rides.add(ride);
 
         this.currentX = ride.end.getLeft();
         this.currentY = ride.end.getRight();
 
+        // the current time for the vehicle from it's start time
+        //  for the ride and the distance travelled
         this.currentTime = startTime + ride.distance();
     }
 

@@ -86,7 +86,7 @@ public class Main {
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));
 
             writer.write(output);
-
+            writer.newLine();
             writer.close();
         } catch (IOException ex) {
 
