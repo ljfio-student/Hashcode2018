@@ -57,6 +57,8 @@ public class Main {
 
                 rides.add(new Ride(r, startX, startY, endX, endY, earliestStart, latestFinish));
             }
+
+            reader.close();
         } catch (IOException ex) {
 
         }
