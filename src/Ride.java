@@ -24,4 +24,8 @@ public class Ride  {
     public int distance() {
         return (start.getLeft() - end.getLeft()) + (start.getRight() - end.getRight());
     }
+
+    public int distance(Vehicle v) {
+        return (v.currentX - start.getLeft()) + (v.currentY - start.getRight());
+    }
 }
