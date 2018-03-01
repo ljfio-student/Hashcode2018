@@ -20,4 +20,8 @@ public class Ride  {
         this.earliestStart = earliest;
         this.latestFinish = latest;
     }
+
+    public int distance() {
+        return (start.getLeft() - end.getLeft()) + (start.getRight() - end.getRight());
+    }
 }
