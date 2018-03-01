@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +17,34 @@ public class Main {
     public int stepCount;
 
     public static void main(String[] args) {
-        new Main(args[0], args[1]);
+        if (args.length != 2) {
+            System.err.println("Input and ouput file/directory are requried as arguments");
+            return;
+        }
+
+        File inputPath = new File(args[0]);
+        File outputPath = new File(args[1]);
+
+        // Check to make sure the directory or file exists
+        if (!inputPath.exists()) {
+            System.err.println("Input file/directory does not exist");
+        }
+
+        // Create an output directory if the input is a directory and the output directory doesn't exist
+        if (!outputPath.exists() && inputPath.isDirectory()) {
+            outputPath.mkdir();
+        }
+
+        // If we are in a directory iterate over each file and run the program
+        if (inputPath.isDirectory()) {
+            File[] files = inputPath.listFiles();
+
+            for (File file : files) {
+                new Main(file.getAbsolutePath(), outputPath.getAbsolutePath() + File.separatorChar + file.getName() + ".out");
+            }
+        } else {
+            new Main(inputPath.getAbsolutePath(), outputPath.getAbsolutePath());
+        }
     }
 
     public Main(String inputFileName, String outputFileName) {
