@@ -8,7 +8,7 @@ public class Ride  {
     public int latestFinish;
 
     public Ride(int id, int startX, int startY, int endX, int endY, int earliest, int latest) {
-        this(new Pair<Integer, Integer>(startX, startY), new Pair<Integer, Integer>(endX, endY), earliest, latest);
+        this(id, new Pair<Integer, Integer>(startX, startY), new Pair<Integer, Integer>(endX, endY), earliest, latest);
     }
 
     public Ride (int id, Pair<Integer, Integer> start, Pair<Integer, Integer> end, int earliest, int latest) {
