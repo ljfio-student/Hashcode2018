@@ -1,10 +1,13 @@
 public class Vehicle {
+    public int id;
+
     public int currentX;
     public int currentY;
 
     public List<Ride> rides;
 
-    public Vehicle() {
+    public Vehicle(int id) {
+        this.id = id;
         this.rides = new ArrayList<Ride>();
     }
 
