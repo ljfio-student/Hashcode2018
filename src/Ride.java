@@ -1,5 +1,6 @@
 public class Ride  {
     public int id;
+    public boolean allocated;
 
     public Pair<Integer, Integer> start;
     public Pair<Integer, Integer> end;

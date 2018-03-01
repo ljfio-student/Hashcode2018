@@ -57,23 +57,30 @@ public class Main {
         System.out.printf("Rides: %d\n", rides.size());
         System.out.printf("Vehicles: %d\n", vehicles.size());
 
-        // Order the rides by the earliest start
-        Collections.sort(rides, (a, b) -> a.earliestStart - b.earliestStart);
+        int maximumTime = 0;
+        boolean allocated = true;
 
-        for (int r = 0; r < rides.size(); r++) {
-            Ride ride = rides.get(r);
+        while (maximumTime < stepCount && allocated) {
+            allocated = false;
 
-            // Order by the closest vehicle to ride
-            // Filter out any vehcile that is not within range
-            Optional<Vehicle> vehicle = vehicles.stream()
-                .filter(v -> v.currentTime + ride.distance(v) + ride.distance() <= ride.latestFinish)
-                .sorted((a, b) -> ride.distance(a) - ride.distance(b))
-                .findFirst();
+            for (int v = 0; v < vehicles.size(); v++) {
+                Vehicle vehicle = vehicles.get(v);
 
-            if (vehicle.isPresent()) {
-                int startTime = vehicle.get().currentTime + ride.distance(vehicle.get());
+                Optional<Ride> foundRide = rides.stream()
+                    .filter(r -> !r.allocated && vehicle.currentTime + r.distance(vehicle) + r.distance() <= r.latestFinish)
+                    .sorted((a, b) -> a.distance(vehicle) - b.distance(vehicle))
+                    .findFirst();
 
-                vehicle.get().addRide(ride, startTime);
+                if (foundRide.isPresent()) {
+                    Ride ride = foundRide.get();
+
+                    int startTime = Integer.max(ride.earliestStart, vehicle.currentTime + ride.distance(vehicle));
+
+                    vehicle.addRide(ride, startTime);
+                    allocated = true;
+
+                    maximumTime = Integer.max(maximumTime, startTime + ride.distance());
+                }
             }
         }
 

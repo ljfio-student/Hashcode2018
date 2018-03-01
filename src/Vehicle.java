@@ -27,6 +27,7 @@ public class Vehicle {
         // the current time for the vehicle from it's start time
         //  for the ride and the distance travelled
         this.currentTime = startTime + ride.distance();
+        ride.allocated = true;
     }
 
     public String output() {
