@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -64,16 +65,15 @@ public class Main {
 
             // Order by the closest vehicle to ride
             // Filter out any vehcile that is not within range
-            Vehicle vehicle = vehicles.stream()
-                .filter(v -> v.currentTime > ride.latestFinish)
+            Optional<Vehicle> vehicle = vehicles.stream()
+                .filter(v -> v.currentTime + ride.distance(v) + ride.distance() <= ride.latestFinish)
                 .sorted((a, b) -> ride.distance(a) - ride.distance(b))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
 
-            if (vehicle != null) {
-                int startTime = Integer.max(ride.earliestStart, vehicle.currentTime + ride.distance(vehicle));
+            if (vehicle.isPresent()) {
+                int startTime = vehicle.get().currentTime + ride.distance(vehicle.get());
 
-                vehicle.addRide(ride, startTime);
+                vehicle.get().addRide(ride, startTime);
             }
         }
 
