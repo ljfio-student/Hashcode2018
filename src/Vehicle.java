@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Vehicle {
     public int id;
@@ -23,5 +24,13 @@ public class Vehicle {
         this.currentY = ride.end.getRight();
 
         this.currentTime = startTime + ride.distance();
+    }
+
+    public String output() {
+        return String.format("%d ", rides.size()) +
+            rides.stream()
+            .map(r -> r.id)
+            .map(Object::toString)
+            .collect(Collectors.joining(" "));
     }
 }
