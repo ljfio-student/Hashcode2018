@@ -21,10 +21,12 @@ public class Ride  {
         this.latestFinish = latest;
     }
 
+    // return distance from start to finish
     public int distance() {
         return Math.abs((start.getLeft() - end.getLeft()) + (start.getRight() - end.getRight()));
     }
 
+    // return distance from vehicle to start of ride
     public int distance(Vehicle v) {
         return Math.abs((v.currentX - start.getLeft()) + (v.currentY - start.getRight()));
     }
