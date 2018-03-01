@@ -125,8 +125,8 @@ public class Main {
                 int endY = Integer.parseInt(rideInformation[3]);
 
                 // Start / Finish times
-                int earliestStart = Integer.parseInt(rideInformation[0]);
-                int latestFinish = Integer.parseInt(rideInformation[0]);
+                int earliestStart = Integer.parseInt(rideInformation[4]);
+                int latestFinish = Integer.parseInt(rideInformation[5]);
 
                 rides.add(new Ride(r, startX, startY, endX, endY, earliestStart, latestFinish));
             }
